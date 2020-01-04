@@ -18,6 +18,7 @@
 #include "keymap_extras/keymap_german.h"
 
 enum plaid_layers {
+  _QWERTY,
   _QWERTZ,
   _LOWER,
   _RAISE,
@@ -26,6 +27,7 @@ enum plaid_layers {
 
 enum plaid_keycodes {
   QWERTZ = SAFE_RANGE,
+  QWERTY,
   EXT_PLV,
   LED_1,
   LED_2,
@@ -66,6 +68,24 @@ const uint16_t modifiers[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+/* Qwerty
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Z  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Y  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Ctrl | RAlt | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_QWERTY] = LAYOUT_plaid_grid(
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Z,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
+    KC_LCTL, KC_RALT, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+),
+
 /* Qwertz
  * ,-----------------------------------------------------------------------------------.
  * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Z  |   U  |   I  |   O  |   P  | Bksp |
@@ -88,17 +108,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   °  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |      |   [  |   ]  |      |  \   |
+ * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   {  |   [  |   ]  |   }  |  \   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |   {  |   }  |      |Enter |
+ * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |   (  |   )  |      |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_plaid_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   _______, DE_LBRC, DE_RBRC, _______ , DE_BSLS,
-  KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, DE_LCBR, DE_RCBR, _______, KC_ENT,
+  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   DE_LCBR, DE_LBRC, DE_RBRC, DE_RCBR , DE_BSLS,
+  KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, DE_LPRN, DE_RPRN, _______, KC_ENT,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -106,17 +126,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   °  |   !  |   "  |   §  |   $  |   %  |   &  |   /  |   (  |   )  |   =  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   @  |   €  |   ü  |   ?  |  ´   |
+ * | Del  |      |      |      |      |      |      |   @  |   €  |   ü  |   ?  |  ´   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   |  |   ö  |   ä  |      |Enter |
+ * | Shift|   <  |   >  |      |      |      |      |   |  |   ö  |   ä  |      |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_plaid_grid(
-  DE_CIRC, DE_EXLM, DE_DQOT, DE_PARA, DE_DLR,  DE_PERC, DE_AMPR, DE_SLSH, DE_EQL, DE_LPRN, DE_RPRN, KC_BSPC,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   DE_AT  , DE_EURO, KC_LBRC, DE_QST, DE_QUOT,
-  KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, DE_PIPE , KC_SCLN, KC_QUOT, _______, KC_ENT,
+  DE_CIRC, DE_EXLM, DE_DQOT, DE_PARA, DE_DLR,  DE_PERC, DE_AMPR, DE_SLSH, DE_LPRN, DE_RPRN, DE_EQL, KC_BSPC,
+  KC_DEL,  _______, _______, _______, _______, _______, _______,   DE_AT, DE_EURO, KC_LBRC, DE_QST, DE_QUOT,
+  KC_LSFT, DE_LESS, DE_MORE, _______, _______, _______, _______, DE_PIPE , KC_SCLN, KC_QUOT, _______, KC_ENT,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -124,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |Reset |      |      |      |      |      |      |      |      |      |      |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|      |      |      |      |Qwertz|
+ * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|      |      |      |Qwertz|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -133,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_plaid_grid(
     RESET,LED_1, LED_2, LED_3, LED_4, LED_5,LED_6, LED_7, LED_8, LED_9, LED_0,KC_DEL ,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______,  _______, _______,  _______,  QWERTZ,
+    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______,  _______,  QWERTZ,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
@@ -240,6 +260,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         print("mode just switched to qwertz and this is a huge string\n");
         set_single_persistent_default_layer(_QWERTZ);
+      }
+      return false;
+      break;
+    case QWERTY:
+      if (record->event.pressed) {
+        print("mode just switched to qwerty and this is a huge string\n");
+        set_single_persistent_default_layer(_QWERTY);
       }
       return false;
       break;
